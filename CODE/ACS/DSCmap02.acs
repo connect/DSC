@@ -60,7 +60,16 @@ script "StartControl" enter {
     
     delay(5);
     
-    // WAVE 4
+    // WAVE 4 
+    //
+    while (WaveOnline){ delay(1); }
+    
+    NextWaveReady = false;
+    ACS_NamedExecuteAlways("Mus_L1", 0);
+    ACS_NamedExecuteAlways("SpawnWave", 0, 100500, NO_SKULL);
+    
+    
+    // WAVE 5
     //
     while (WaveOnline){ delay(1); }    
     
