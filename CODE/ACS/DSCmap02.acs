@@ -7,6 +7,10 @@
  */
 
 #define NO_SKULL      999999
+#define DOOR_1        13
+#define DOOR_2        17
+#define DOOR_3        14
+#define DOOR_5        22
 
 int MapWave         = 0;
 int MsgID           = 13131313;
@@ -29,55 +33,59 @@ script "StartControl" enter {
     //SetThingSpecial(100800, ACS_NamedExecute, "IamReady");
     //SpawnSpotFacingForced("DoomSlayerGliph", 100800, 100600);// test thing
 
-    while (!NextWaveReady){ delay(1); } // first skull taken
+    while (!NextWaveReady){ delay(2); } // first skull taken
     
+    // WAVE 1 Starting Location
+    //
     NextWaveReady = false;
-
     ACS_NamedExecuteAlways("SpawnWave", 0, 100500, NO_SKULL); // spawn first wave
     ACS_NamedExecuteAlways("Mus_L1", 0); // play battle music
 
     delay(5);
     
-    // WAVE 2
+    // WAVE 2 Forward
     //
-    while (WaveOnline){ delay(1); }
+    while (WaveOnline){ delay(2); }
     
     NextWaveReady = false;
     ACS_NamedExecuteAlways("Mus_L1", 0);
     ACS_NamedExecuteAlways("SpawnWave", 0, 100501, NO_SKULL);
-    Door_Open(13, 16);
+    Door_Open(DOOR_1, 16);
 
     delay(5);
     
     // WAVE 3
     //
-    while (WaveOnline){ delay(1); }
+    while (WaveOnline){ delay(2); }
     
     NextWaveReady = false;
     ACS_NamedExecuteAlways("Mus_L1", 0);
     ACS_NamedExecuteAlways("SpawnWave", 0, 100502, NO_SKULL);  
-    Door_Open(14, 64);
+    Door_Open(DOOR_3, 16);
     
     delay(5);
     
-    // WAVE 4 
+    // WAVE 4 Underground
     //
-    while (WaveOnline){ delay(1); }
+    while (WaveOnline){ delay(2); }
     
     NextWaveReady = false;
     ACS_NamedExecuteAlways("Mus_L1", 0);
-    ACS_NamedExecuteAlways("SpawnWave", 0, 100500, NO_SKULL);
+    ACS_NamedExecuteAlways("SpawnWave", 0, 100504, NO_SKULL);
+    Door_Open(DOOR_5, 16);
+    Floor_LowerToHighest(20, 8, 128); 
     
+    delay(5);    
     
-    // WAVE 5
+    // WAVE 5 Starting location
     //
-    while (WaveOnline){ delay(1); }    
+    while (WaveOnline){ delay(2); }    
     
     NextWaveReady = false;
     LastWave = true;
     ACS_NamedExecuteAlways("Mus_L1", 0);
-    ACS_NamedExecuteAlways("SpawnWave", 0, 100500, NO_SKULL);
-    ACS_NamedExecuteAlways("SpawnWave", 0, 100500, 12);
+    ACS_NamedExecuteAlways("SpawnWave", 0, 100503, 12);
+    Floor_LowerToLowest(20, 8); // unlock lift
     
     while (!NextWaveReady){ delay(1); } // wait for glyph taken
 
